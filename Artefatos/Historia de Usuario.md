@@ -1,6 +1,5 @@
- ## História de Usuário
+ ## História de Usuário - Sistema de Matrículas
  
-# Sistema de Matrículas
 
 ## História 1 - Usuário (Gerenciar Usuário)
 *Prioridade:* Alta  
