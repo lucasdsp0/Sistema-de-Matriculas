@@ -30,16 +30,13 @@ public class Matricula {
     private Aluno aluno;
 
     @ManyToMany
-    @JoinTable(
-        name = "matricula_disciplina",
-        joinColumns = @JoinColumn(name = "matricula_id"),
-        inverseJoinColumns = @JoinColumn(name = "disciplina_id")
-    )
+    @JoinTable(name = "matricula_disciplina", joinColumns = @JoinColumn(name = "matricula_id"), inverseJoinColumns = @JoinColumn(name = "disciplina_id"))
     private List<Disciplina> disciplinas = new ArrayList<>();
 
     // ------ Construtores ------
 
-    public Matricula() {}
+    public Matricula() {
+    }
 
     public Matricula(Aluno aluno, StatusMatricula status) {
         this.aluno = aluno;
@@ -60,18 +57,43 @@ public class Matricula {
 
     // ------ Getters e Setters ------
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public Long getId() {
+        return id;
+    }
 
-    public StatusMatricula getStatus() { return status; }
-    public void setStatus(StatusMatricula status) { this.status = status; }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public LocalDateTime getDataMatricula() { return dataMatricula; }
-    public void setDataMatricula(LocalDateTime dataMatricula) { this.dataMatricula = dataMatricula; }
+    public StatusMatricula getStatus() {
+        return status;
+    }
 
-    public Aluno getAluno() { return aluno; }
-    public void setAluno(Aluno aluno) { this.aluno = aluno; }
+    public void setStatus(StatusMatricula status) {
+        this.status = status;
+    }
 
-    public List<Disciplina> getDisciplinas() { return disciplinas; }
-    public void setDisciplinas(List<Disciplina> disciplinas) { this.disciplinas = disciplinas; }
+    public LocalDateTime getDataMatricula() {
+        return dataMatricula;
+    }
+
+    public void setDataMatricula(LocalDateTime dataMatricula) {
+        this.dataMatricula = dataMatricula;
+    }
+
+    public Aluno getAluno() {
+        return aluno;
+    }
+
+    public void setAluno(Aluno aluno) {
+        this.aluno = aluno;
+    }
+
+    public List<Disciplina> getDisciplinas() {
+        return disciplinas;
+    }
+
+    public void setDisciplinas(List<Disciplina> disciplinas) {
+        this.disciplinas = disciplinas;
+    }
 }

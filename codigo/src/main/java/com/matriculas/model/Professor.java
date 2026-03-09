@@ -20,7 +20,8 @@ public class Professor extends Usuario {
 
     // ------ Construtores ------
 
-    public Professor() {}
+    public Professor() {
+    }
 
     public Professor(String nome, String login, String senha, Long numCadastro) {
         super(nome, login, senha);

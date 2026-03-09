@@ -39,7 +39,8 @@ public class Disciplina {
 
     // ------ Construtores ------
 
-    public Disciplina() {}
+    public Disciplina() {
+    }
 
     public Disciplina(String nome, boolean obrigatorio, StatusDisciplina status) {
         this.nome = nome;
@@ -80,27 +81,67 @@ public class Disciplina {
 
     // ------ Getters e Setters ------
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public Long getId() {
+        return id;
+    }
 
-    public String getNome() { return nome; }
-    public void setNome(String nome) { this.nome = nome; }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public boolean isObrigatorio() { return obrigatorio; }
-    public void setObrigatorio(boolean obrigatorio) { this.obrigatorio = obrigatorio; }
+    public String getNome() {
+        return nome;
+    }
 
-    public StatusDisciplina getStatus() { return status; }
-    public void setStatus(StatusDisciplina status) { this.status = status; }
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
 
-    public int getNumMaxAlunos() { return numMaxAlunos; }
-    public void setNumMaxAlunos(int numMaxAlunos) { this.numMaxAlunos = numMaxAlunos; }
+    public boolean isObrigatorio() {
+        return obrigatorio;
+    }
 
-    public int getNumMinAlunos() { return numMinAlunos; }
-    public void setNumMinAlunos(int numMinAlunos) { this.numMinAlunos = numMinAlunos; }
+    public void setObrigatorio(boolean obrigatorio) {
+        this.obrigatorio = obrigatorio;
+    }
 
-    public Professor getProfessor() { return professor; }
-    public void setProfessor(Professor professor) { this.professor = professor; }
+    public StatusDisciplina getStatus() {
+        return status;
+    }
 
-    public List<Matricula> getMatriculas() { return matriculas; }
-    public void setMatriculas(List<Matricula> matriculas) { this.matriculas = matriculas; }
+    public void setStatus(StatusDisciplina status) {
+        this.status = status;
+    }
+
+    public int getNumMaxAlunos() {
+        return numMaxAlunos;
+    }
+
+    public void setNumMaxAlunos(int numMaxAlunos) {
+        this.numMaxAlunos = numMaxAlunos;
+    }
+
+    public int getNumMinAlunos() {
+        return numMinAlunos;
+    }
+
+    public void setNumMinAlunos(int numMinAlunos) {
+        this.numMinAlunos = numMinAlunos;
+    }
+
+    public Professor getProfessor() {
+        return professor;
+    }
+
+    public void setProfessor(Professor professor) {
+        this.professor = professor;
+    }
+
+    public List<Matricula> getMatriculas() {
+        return matriculas;
+    }
+
+    public void setMatriculas(List<Matricula> matriculas) {
+        this.matriculas = matriculas;
+    }
 }

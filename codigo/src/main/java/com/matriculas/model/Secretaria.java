@@ -12,7 +12,8 @@ public class Secretaria extends Usuario {
 
     // ------ Construtores ------
 
-    public Secretaria() {}
+    public Secretaria() {
+    }
 
     public Secretaria(String nome, String login, String senha) {
         super(nome, login, senha);
