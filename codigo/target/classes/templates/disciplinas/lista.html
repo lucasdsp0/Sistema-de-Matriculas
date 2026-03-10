@@ -13,7 +13,15 @@
         <div class="table-responsive">
             <table class="table table-hover">
                 <thead class="table-light">
-                    <tbody>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Nome da Disciplina</th>
+                        <th scope="col">Professor</th>
+                        <th scope="col">Vagas</th>
+                        <th scope="col">Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
                     <tr th:each="disciplina : ${disciplinas}">
                         <td th:text="${disciplina.id}">ID</td>
                         <td th:text="${disciplina.nome}">Nome da Disciplina</td>
@@ -23,8 +31,6 @@
                             <a href="#" class="btn btn-sm btn-primary">Matricular</a>
                         </td>
                     </tr>
-                </tbody>
-                    <!-- Fim do Exemplo -->
                 </tbody>
             </table>
         </div>

@@ -10,7 +10,7 @@
     <div th:fragment="content">
         <h1 class="my-4 gradient-text">Disciplinas Matriculadas</h1>
 
-        <div class="table-responsive">
+        <div th:if="${not #lists.isEmpty(matriculas)}" class="table-responsive">
             <table class="table table-hover">
                 <thead class="table-light">
                     <tr>
@@ -22,28 +22,29 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Exemplo de Linha (será substituído por dados do backend) -->
-                    <tr>
-                        <td>MA202</td>
-                        <td>Matemática Discreta</td>
-                        <td>Dra. Ada Lovelace</td>
-                        <td><span class="badge bg-success">Matriculado</span></td>
+                    <tr th:each="matricula : ${matriculas}">
+                        <td>
+                            <span th:each="disc : ${matricula.disciplinas}" th:text="${disc.id}" th:if="${matricula.disciplinas.size() == 1}" >ID</span>
+                            <span th:if="${matricula.disciplinas.size() > 1}">Múltiplas</span>
+                        </td>
+                        <td>
+                            <span th:each="disc : ${matricula.disciplinas}" th:text="${disc.nome}" th:if="${matricula.disciplinas.size() == 1}"></span>
+                            <span th:if="${matricula.disciplinas.size() > 1}">Múltiplas disciplinas</span>
+                        </td>
+                        <td>
+                            <span th:each="disc : ${matricula.disciplinas}" th:text="${disc.professor != null ? disc.professor.nome : 'A definir'}" th:if="${matricula.disciplinas.size() == 1}"></span>
+                            <span th:if="${matricula.disciplinas.size() > 1}">Vários</span>
+                        </td>
+                        <td><span th:class="'badge ' + (${matricula.status} == 'EFETIVADA' ? 'bg-success' : 'bg-warning text-dark')" th:text="${matricula.status}"></span></td>
                         <td>
                             <a href="#" class="btn btn-sm btn-danger">Cancelar Matrícula</a>
                         </td>
                     </tr>
-                    <tr>
-                        <td>CS101</td>
-                        <td>Introdução à Computação</td>
-                        <td>Dr. Alan Turing</td>
-                        <td><span class="badge bg-warning text-dark">Pendente</span></td>
-                        <td>
-                            <a href="#" class="btn btn-sm btn-danger disabled">Cancelar Matrícula</a>
-                        </td>
-                    </tr>
-                    <!-- Fim do Exemplo -->
                 </tbody>
             </table>
+        </div>
+        <div th:if="${#lists.isEmpty(matriculas)}" class="alert alert-info">
+            <p>Você não possui matrículas ativas. Para se matricular, acesse a seção de Disciplinas.</p>
         </div>
     </div>
 </body>

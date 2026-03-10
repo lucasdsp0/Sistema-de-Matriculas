@@ -3,46 +3,43 @@
     th:replace="~{fragments/layout :: layout(~{::title}, ~{::content})}">
 
 <head>
-    <title>Dashboard - Sistema de Matrículas</title>
+    <title>Início - Sistema de Matrículas</title>
 </head>
 
 <body>
     <div th:fragment="content">
-        <h1 class="my-4 gradient-text">Bem-vindo ao Sistema de Matrículas</h1>
-
-        <div class="row">
-            <!-- Card para Alunos -->
-            <div class="col-md-4 mb-4">
-                <div class="card h-100">
-                    <div class="card-header">Portal do Aluno</div>
-                    <div class="card-body">
-                        <h5 class="card-title">Minhas Matrículas</h5>
-                        <p class="card-text">Visualize as disciplinas em que você está matriculado e seu histórico.</p>
-                        <a th:href="@{/aluno/matriculas}" class="btn btn-primary">Acessar</a>
+        <div class="py-5">
+            <h1 class="display-4 fw-bold mb-3">Painel Administrativo</h1>
+            <p class="lead text-muted">Gerencie o sistema de matrículas da PUC Minas.</p>
+            
+            <div class="row mt-5 g-4 text-center">
+                <div class="col-md-4">
+                    <div class="card p-4 h-100 shadow-sm">
+                        <div class="card-body">
+                            <h3 class="card-title mb-3">Alunos</h3>
+                            <p class="text-muted small">Gerencie o cadastro de estudantes e dados pessoais.</p>
+                            <a th:href="@{/aluno/lista}" class="btn btn-primary w-100 mt-2">Gerenciar Alunos</a>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Card para Secretaria -->
-            <div class="col-md-4 mb-4">
-                <div class="card h-100">
-                    <div class="card-header">Portal da Secretaria</div>
-                    <div class="card-body">
-                        <h5 class="card-title">Gerenciar Disciplinas</h5>
-                        <p class="card-text">Adicione, edite ou remova disciplinas do sistema.</p>
-                        <a th:href="@{/disciplinas/form}" class="btn btn-primary">Nova Disciplina</a>
+                <div class="col-md-4">
+                    <div class="card p-4 h-100 shadow-sm">
+                        <div class="card-body">
+                            <h3 class="card-title mb-3">Disciplinas</h3>
+                            <p class="text-muted small">Cadastre matérias e controle a oferta de vagas.</p>
+                            <a th:href="@{/disciplinas/lista}" class="btn btn-primary w-100 mt-2">Gerenciar Disciplinas</a>
+                        </div>
                     </div>
                 </div>
-            </div>
-
-            <!-- Card para Professores -->
-            <div class="col-md-4 mb-4">
-                <div class="card h-100">
-                    <div class="card-header">Portal do Professor</div>
-                    <div class="card-body">
-                        <h5 class="card-title">Ver Alunos</h5>
-                        <p class="card-text">Consulte a lista de alunos matriculados em suas disciplinas.</p>
-                        <a th:href="@{/professor/alunos}" class="btn btn-primary">Consultar</a>
+                
+                <div class="col-md-4">
+                    <div class="card p-4 h-100 shadow-sm">
+                        <div class="card-body">
+                            <h3 class="card-title mb-3">Matrículas</h3>
+                            <p class="text-muted small">Visualize e processe as inscrições do semestre.</p>
+                            <a th:href="@{/aluno/matriculas}" class="btn btn-primary w-100 mt-2">Ver Matrículas</a>
+                        </div>
                     </div>
                 </div>
             </div>
