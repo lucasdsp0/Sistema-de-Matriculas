@@ -27,12 +27,9 @@
                 <tbody>
                     <tr th:each="curriculo : ${curriculos}">
                         <td th:text="${curriculo.semestre}">Semestre</td>
-                        <td th:text="${#dates.format(curriculo.dataInicio, 'dd/MM/yyyy')}">Início</td>
-                        <td th:text="${curriculo.dataFim != null ? #dates.format(curriculo.dataFim, 'dd/MM/yyyy') : '-'}">Fim</td>
-                        <td>
-                            <span th:if="${curriculo.disciplinas != null}" th:text="${curriculo.disciplinas.size()}"></span>
-                            <span th:unless="${curriculo.disciplinas != null}">0</span>
-                        </td>
+                        <td th:text="${curriculo.dataInicioFormatted}">Início</td>
+                        <td th:text="${curriculo.dataFimFormatted}">Fim</td>
+                        <td th:text="${curriculo.disciplinasCount}">0</td>
                         <td>
                             <a href="#" class="btn btn-sm btn-info">Editar</a>
                             <a href="#" class="btn btn-sm btn-danger">Deletar</a>

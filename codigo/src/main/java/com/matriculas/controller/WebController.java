@@ -3,16 +3,20 @@ package com.matriculas.controller;
 import com.matriculas.model.*;
 import com.matriculas.model.enums.StatusDisciplina;
 import com.matriculas.model.enums.StatusMatricula;
+import com.matriculas.model.viewmodel.CurriculoViewModel;
 import com.matriculas.repository.*;
 import com.matriculas.service.MatriculaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import jakarta.servlet.http.HttpSession;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class WebController {
@@ -92,21 +96,30 @@ public class WebController {
     }
 
     @GetMapping("/disciplinas/lista")
-    public String listaDisciplinas(Model model) {
+    public String listaDisciplinas(Model model, HttpSession session) {
+        if (!isSecretaria(session)) {
+            return "redirect:/";
+        }
         model.addAttribute("disciplinas", disciplinaRepository.findAll());
         return "disciplinas/lista";
     }
 
     
     @GetMapping("/disciplinas/form")
-    public String formDisciplina(Model model) {
+    public String formDisciplina(Model model, HttpSession session) {
+        if (!isSecretaria(session)) {
+            return "redirect:/";
+        }
         model.addAttribute("disciplina", new Disciplina());
         return "disciplinas/form";
     }
 
    
     @PostMapping("/disciplinas/save")
-    public String salvarDisciplina(Disciplina disciplina) {
+    public String salvarDisciplina(Disciplina disciplina, HttpSession session) {
+        if (!isSecretaria(session)) {
+            return "redirect:/";
+        }
         disciplina.setStatus(StatusDisciplina.ATIVA); // Define como ativa por padrão
         disciplina.setObrigatorio(true); // Define como obrigatória por padrão
         disciplinaRepository.save(disciplina);
@@ -134,7 +147,10 @@ public class WebController {
     }
 
     @GetMapping("/aluno/lista")
-    public String listaAlunos(Model model) {
+    public String listaAlunos(Model model, HttpSession session) {
+        if (!isSecretaria(session)) {
+            return "redirect:/";
+        }
         // Lista todos os alunos cadastrados no sistema
         model.addAttribute("alunos", alunoRepository.findAll());
         return "aluno/lista";
@@ -162,13 +178,19 @@ public class WebController {
     // ========== ENDPOINTS DE CADASTRO ==========
 
     @GetMapping("/aluno/cadastro")
-    public String formCadastroAluno(Model model) {
+    public String formCadastroAluno(Model model, HttpSession session) {
+        if (!isSecretaria(session)) {
+            return "redirect:/";
+        }
         model.addAttribute("aluno", new Aluno());
         return "aluno/cadastro";
     }
 
     @PostMapping("/aluno/save")
-    public String salvarAluno(@ModelAttribute Aluno aluno, Model model) {
+    public String salvarAluno(@ModelAttribute Aluno aluno, Model model, HttpSession session) {
+        if (!isSecretaria(session)) {
+            return "redirect:/";
+        }
         try {
             // Valida se login já existe
             boolean loginExiste = alunoRepository.findAll().stream()
@@ -197,13 +219,19 @@ public class WebController {
     }
 
     @GetMapping("/professor/cadastro")
-    public String formCadastroProfessor(Model model) {
+    public String formCadastroProfessor(Model model, HttpSession session) {
+        if (!isSecretaria(session)) {
+            return "redirect:/";
+        }
         model.addAttribute("professor", new Professor());
         return "professor/cadastro";
     }
 
     @PostMapping("/professor/save")
-    public String salvarProfessor(@ModelAttribute Professor professor, Model model) {
+    public String salvarProfessor(@ModelAttribute Professor professor, Model model, HttpSession session) {
+        if (!isSecretaria(session)) {
+            return "redirect:/";
+        }
         try {
             // Valida se login já existe
             boolean loginExiste = professorRepository.findAll().stream()
@@ -312,16 +340,23 @@ public class WebController {
     // ========== ENDPOINTS DE CURRÍCULO ==========
 
     @GetMapping("/curriculo/form")
-    public String formCurriculo(Model model) {
+    public String formCurriculo(Model model, HttpSession session) {
+        if (!isSecretaria(session)) {
+            return "redirect:/";
+        }
         model.addAttribute("curriculo", new Curriculo());
         model.addAttribute("disciplinas", disciplinaRepository.findAll());
         return "curriculo/form";
     }
 
+    @Transactional
     @PostMapping("/curriculo/save")
     public String salvarCurriculo(@ModelAttribute Curriculo curriculo, 
                                   @RequestParam(required = false) List<Long> disciplinaIds,
-                                  Model model) {
+                                  Model model, HttpSession session) {
+        if (!isSecretaria(session)) {
+            return "redirect:/";
+        }
         try {
             if (curriculo.getSemestre() == null || curriculo.getSemestre().isEmpty()) {
                 model.addAttribute("erro", "Semestre é obrigatório!");
@@ -356,15 +391,33 @@ public class WebController {
     }
 
     @GetMapping("/curriculo/lista")
-    public String listaCurriculos(Model model) {
-        model.addAttribute("curriculos", curriculoRepository.findAll());
+    public String listaCurriculos(Model model, HttpSession session) {
+        if (!isSecretaria(session)) {
+            return "redirect:/";
+        }
+        List<Curriculo> curriculos = curriculoRepository.findAll();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+        List<CurriculoViewModel> curriculosViewModel = curriculos.stream()
+            .map(c -> {
+                String dataInicio = c.getDataInicio() != null ? c.getDataInicio().format(formatter) : "-";
+                String dataFim = c.getDataFim() != null ? c.getDataFim().format(formatter) : "-";
+                int disciplinasCount = c.getDisciplinas() != null ? c.getDisciplinas().size() : 0;
+                return new CurriculoViewModel(c.getSemestre(), dataInicio, dataFim, disciplinasCount);
+            })
+            .collect(Collectors.toList());
+
+        model.addAttribute("curriculos", curriculosViewModel);
         return "curriculo/lista";
     }
 
     // ========== ENDPOINTS DE PERÍODO DE MATRÍCULA ==========
 
     @GetMapping("/periodo/encerrar")
-    public String formEncerrarPeriodo(Model model) {
+    public String formEncerrarPeriodo(Model model, HttpSession session) {
+        if (!isSecretaria(session)) {
+            return "redirect:/";
+        }
         model.addAttribute("curriculos", curriculoRepository.findAll());
         return "periodo/encerrar";
     }
@@ -427,5 +480,10 @@ public class WebController {
             model.addAttribute("secretaria", secretaria);
             return "secretaria/cadastro";
         }
+    }
+
+    private boolean isSecretaria(HttpSession session) {
+        String tipoUsuario = (String) session.getAttribute("tipoUsuario");
+        return "SECRETARIA".equals(tipoUsuario);
     }
 }
