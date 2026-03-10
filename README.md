@@ -13,16 +13,17 @@ O projeto abrange desde a modelagem de requisitos e arquitetura (UML) até a imp
 
 ---
 
-## Instruções de utilização
-Para rodar o sistema, compile todos os arquivos Java e em seguida execute a classe App. A forma mais simples é usar o terminal na raiz do projeto:
+## 🚀 Como Executar o Projeto
 
+1. Abra o terminal e entre na pasta do projeto:
+   ```bash
+   cd codigo
+   
+Inicie o servidor:
 ```bash
-# compilar
-javac -d out $(find src -name "*.java")
-
-# executar
-cd out
-java App
+mvn spring-boot:run
 ```
+Abra o navegador e acesse: http://localhost:8080
+
 ## Histórias de Usuário
 História de usuário disponivel em ([Historia de Usuario.md](https://github.com/lucasdsp0/Sistema-de-Matriculas/blob/c12e162af1e1ff914b0fd22265d6e8f56a46ab7d/Artefatos/Historia%20de%20Usuario.md))
