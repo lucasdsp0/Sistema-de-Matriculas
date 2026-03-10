@@ -24,7 +24,8 @@ public abstract class Usuario {
 
     // ------ Construtores ------
 
-    public Usuario() {}
+    public Usuario() {
+    }
 
     public Usuario(String nome, String login, String senha) {
         this.nome = nome;

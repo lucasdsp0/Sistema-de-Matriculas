@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+    th:replace="~{fragments/layout :: layout(~{::title}, ~{::content})}">
+
+<head>
+    <title>Formulário de Disciplina</title>
+</head>
+
+<body>
+    <div th:fragment="content">
+        <h1 class="my-4 gradient-text">Nova Disciplina</h1>
+
+        <div class="card">
+            <div class="card-body">
+                <form action="#" th:action="@{/disciplinas/save}" th:object="${disciplina}" method="post">
+                    <div class="mb-3">
+                        <label for="nome" class="form-label">Nome da Disciplina</label>
+                        <input type="text" class="form-control" id="nome" th:field="*{nome}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="codigo" class="form-label">Código</label>
+                        <input type="text" class="form-control" id="codigo" th:field="*{codigo}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="professor" class="form-label">Professor</label>
+                        <select class="form-select" id="professor" th:field="*{professor.id}">
+                            <!-- Exemplo de Option (será populado pelo backend) -->
+                            <option value="1">Dr. Alan Turing</option>
+                            <option value="2">Dra. Ada Lovelace</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="vagas" class="form-label">Vagas</label>
+                        <input type="number" class="form-control" id="vagas" th:field="*{vagas}" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Salvar Disciplina</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

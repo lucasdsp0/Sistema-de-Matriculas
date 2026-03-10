@@ -6,7 +6,8 @@ import java.util.List;
 
 /**
  * Representa um aluno da universidade.
- * Possui número de matrícula único e pode se inscrever em disciplinas via Matricula.
+ * Possui número de matrícula único e pode se inscrever em disciplinas via
+ * Matricula.
  */
 @Entity
 @Table(name = "alunos")
@@ -20,7 +21,8 @@ public class Aluno extends Usuario {
 
     // ------ Construtores ------
 
-    public Aluno() {}
+    public Aluno() {
+    }
 
     public Aluno(String nome, String login, String senha, Long numMatricula) {
         super(nome, login, senha);

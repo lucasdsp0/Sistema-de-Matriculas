@@ -26,16 +26,13 @@ public class Curriculo {
     private String semestre; // ex: "2024/1"
 
     @ManyToMany
-    @JoinTable(
-        name = "curriculo_disciplina",
-        joinColumns = @JoinColumn(name = "curriculo_id"),
-        inverseJoinColumns = @JoinColumn(name = "disciplina_id")
-    )
+    @JoinTable(name = "curriculo_disciplina", joinColumns = @JoinColumn(name = "curriculo_id"), inverseJoinColumns = @JoinColumn(name = "disciplina_id"))
     private List<Disciplina> disciplinas = new ArrayList<>();
 
     // ------ Construtores ------
 
-    public Curriculo() {}
+    public Curriculo() {
+    }
 
     public Curriculo(String semestre, LocalDate dataInicio) {
         this.semestre = semestre;
@@ -54,18 +51,43 @@ public class Curriculo {
 
     // ------ Getters e Setters ------
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public Long getId() {
+        return id;
+    }
 
-    public LocalDate getDataInicio() { return dataInicio; }
-    public void setDataInicio(LocalDate dataInicio) { this.dataInicio = dataInicio; }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public LocalDate getDataFim() { return dataFim; }
-    public void setDataFim(LocalDate dataFim) { this.dataFim = dataFim; }
+    public LocalDate getDataInicio() {
+        return dataInicio;
+    }
 
-    public String getSemestre() { return semestre; }
-    public void setSemestre(String semestre) { this.semestre = semestre; }
+    public void setDataInicio(LocalDate dataInicio) {
+        this.dataInicio = dataInicio;
+    }
 
-    public List<Disciplina> getDisciplinas() { return disciplinas; }
-    public void setDisciplinas(List<Disciplina> disciplinas) { this.disciplinas = disciplinas; }
+    public LocalDate getDataFim() {
+        return dataFim;
+    }
+
+    public void setDataFim(LocalDate dataFim) {
+        this.dataFim = dataFim;
+    }
+
+    public String getSemestre() {
+        return semestre;
+    }
+
+    public void setSemestre(String semestre) {
+        this.semestre = semestre;
+    }
+
+    public List<Disciplina> getDisciplinas() {
+        return disciplinas;
+    }
+
+    public void setDisciplinas(List<Disciplina> disciplinas) {
+        this.disciplinas = disciplinas;
+    }
 }
