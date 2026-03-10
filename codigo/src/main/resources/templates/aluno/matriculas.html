@@ -8,7 +8,10 @@
 
 <body>
     <div th:fragment="content">
-        <h1 class="my-4 gradient-text">Disciplinas Matriculadas</h1>
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1 class="gradient-text">Disciplinas Matriculadas</h1>
+            <a href="/matricula/formulario" class="btn btn-success">+ Efetuar Matrícula</a>
+        </div>
 
         <div th:if="${not #lists.isEmpty(matriculas)}" class="table-responsive">
             <table class="table table-hover">
@@ -37,7 +40,9 @@
                         </td>
                         <td><span th:class="'badge ' + (${matricula.status} == 'EFETIVADA' ? 'bg-success' : 'bg-warning text-dark')" th:text="${matricula.status}"></span></td>
                         <td>
-                            <a href="#" class="btn btn-sm btn-danger">Cancelar Matrícula</a>
+                            <a th:href="@{/matricula/cancelar/{id}(id=${matricula.id})}" 
+                               class="btn btn-sm btn-danger" 
+                               onclick="return confirm('Tem certeza que deseja cancelar esta matrícula?')">Cancelar</a>
                         </td>
                     </tr>
                 </tbody>

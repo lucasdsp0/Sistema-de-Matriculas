@@ -11,8 +11,11 @@ C:\Users\lucas\OneDrive\Documentos\Sistema-de-Matriculas\codigo\src\main\java\co
 C:\Users\lucas\OneDrive\Documentos\Sistema-de-Matriculas\codigo\src\main\java\com\matriculas\model\Aluno.java
 C:\Users\lucas\OneDrive\Documentos\Sistema-de-Matriculas\codigo\src\main\java\com\matriculas\service\DisciplinaService.java
 C:\Users\lucas\OneDrive\Documentos\Sistema-de-Matriculas\codigo\src\main\java\com\matriculas\model\Usuario.java
+C:\Users\lucas\OneDrive\Documentos\Sistema-de-Matriculas\codigo\src\main\java\com\matriculas\repository\CurriculoRepository.java
+C:\Users\lucas\OneDrive\Documentos\Sistema-de-Matriculas\codigo\src\main\java\com\matriculas\repository\SecretariaRepository.java
 C:\Users\lucas\OneDrive\Documentos\Sistema-de-Matriculas\codigo\src\main\java\com\matriculas\model\Secretaria.java
 C:\Users\lucas\OneDrive\Documentos\Sistema-de-Matriculas\codigo\src\main\java\com\matriculas\repository\CursoRepository.java
+C:\Users\lucas\OneDrive\Documentos\Sistema-de-Matriculas\codigo\src\main\java\com\matriculas\repository\ProfessorRepository.java
 C:\Users\lucas\OneDrive\Documentos\Sistema-de-Matriculas\codigo\src\main\java\com\matriculas\repository\MatriculaRepository.java
 C:\Users\lucas\OneDrive\Documentos\Sistema-de-Matriculas\codigo\src\main\java\com\matriculas\model\Disciplina.java
 C:\Users\lucas\OneDrive\Documentos\Sistema-de-Matriculas\codigo\src\main\java\com\matriculas\model\enums\StatusDisciplina.java

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+    th:replace="~{fragments/layout :: layout(~{::title}, ~{::content})}">
+
+<head>
+    <title>Efetuar Matrícula</title>
+</head>
+
+<body>
+    <div th:fragment="content">
+        <h1 class="my-4 gradient-text">Efetuar Matrícula em Disciplinas</h1>
+
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Selecione as disciplinas</h5>
+                        <p class="text-muted">Máximo 4 obrigatórias e 2 optativas</p>
+
+                        <div th:if="${erro}" class="alert alert-danger">
+                            <span th:text="${erro}"></span>
+                        </div>
+
+                        <form th:action="@{/matricula/efetuar}" method="post">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th scope="col">Selecionar</th>
+                                            <th scope="col">Disciplina</th>
+                                            <th scope="col">Professor</th>
+                                            <th scope="col">Vagas</th>
+                                            <th scope="col">Tipo</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="disciplina : ${disciplinas}">
+                                            <td>
+                                                <input class="form-check-input" type="checkbox" name="disciplinaIds" 
+                                                       th:value="${disciplina.id}" th:id="'disc'+${disciplina.id}">
+                                            </td>
+                                            <td th:text="${disciplina.nome}">Disciplina</td>
+                                            <td th:text="${disciplina.professor != null ? disciplina.professor.nome : 'A definir'}">Professor</td>
+                                            <td th:text="${disciplina.numMaxAlunos}">60</td>
+                                            <td>
+                                                <span th:if="${disciplina.obrigatorio}" class="badge bg-danger">Obrigatória</span>
+                                                <span th:unless="${disciplina.obrigatorio}" class="badge bg-info">Optativa</span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                                <a href="/aluno/matriculas" class="btn btn-secondary">Cancelar</a>
+                                <button type="submit" class="btn btn-success">Confirmar Matrícula</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

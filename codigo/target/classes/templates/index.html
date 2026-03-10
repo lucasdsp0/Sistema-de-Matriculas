@@ -42,6 +42,56 @@
                         </div>
                     </div>
                 </div>
+                
+                <div class="col-md-4">
+                    <div class="card p-4 h-100 shadow-sm">
+                        <div class="card-body">
+                            <h3 class="card-title mb-3">Professores</h3>
+                            <p class="text-muted small">Cadastre professores e atribua disciplinas.</p>
+                            <a th:href="@{/professor/cadastro}" class="btn btn-primary w-100 mt-2">Gerenciar Professores</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card p-4 h-100 shadow-sm">
+                        <div class="card-body">
+                            <h3 class="card-title mb-3">Currículos</h3>
+                            <p class="text-muted small">Gerencie os currículos e disciplinas por semestre.</p>
+                            <a th:href="@{/curriculo/lista}" class="btn btn-primary w-100 mt-2">Ver Currículos</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card p-4 h-100 shadow-sm">
+                        <div class="card-body">
+                            <h3 class="card-title mb-3">Minhas Matrículas</h3>
+                            <p class="text-muted small">Acesse e gerencie suas matrículas como aluno.</p>
+                            <a th:href="@{/aluno/matriculas}" class="btn btn-primary w-100 mt-2">Gerenciar</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card p-4 h-100 shadow-sm">
+                        <div class="card-body">
+                            <h3 class="card-title mb-3">Secretaria</h3>
+                            <p class="text-muted small">Cadastro de funcionária da secretaria.</p>
+                            <a th:href="@{/secretaria/cadastro}" class="btn btn-primary w-100 mt-2">Cadastrar Secretária</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card p-4 h-100 shadow-sm">
+                        <div class="card-body">
+                            <h3 class="card-title mb-3">Período de Matrícula</h3>
+                            <p class="text-muted small">Encerrar período e processar disciplinas.</p>
+                            <a th:href="@{/periodo/encerrar}" class="btn btn-danger w-100 mt-2">Encerrar Período</a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

@@ -28,7 +28,7 @@
                         <td th:text="${disciplina.professor != null ? disciplina.professor.nome : 'A definir'}">Professor</td>
                         <td th:text="${disciplina.numMaxAlunos}">60</td>
                         <td>
-                            <a href="#" class="btn btn-sm btn-primary">Matricular</a>
+                            <a th:href="@{/matricula/formulario}" class="btn btn-sm btn-primary">Matricular</a>
                         </td>
                     </tr>
                 </tbody>

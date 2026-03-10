@@ -9,6 +9,8 @@ com\matriculas\model\Secretaria.class
 com\matriculas\repository\AlunoRepository.class
 com\matriculas\model\enums\StatusMatricula.class
 com\matriculas\model\enums\StatusDisciplina.class
+com\matriculas\repository\SecretariaRepository.class
+com\matriculas\repository\CurriculoRepository.class
 com\matriculas\repository\DisciplinaRepository.class
 com\matriculas\service\MatriculaService.class
 com\matriculas\config\CargaInicial.class
@@ -16,4 +18,5 @@ com\matriculas\model\Disciplina.class
 com\matriculas\repository\CursoRepository.class
 com\matriculas\model\Usuario.class
 com\matriculas\repository\MatriculaRepository.class
+com\matriculas\repository\ProfessorRepository.class
 com\matriculas\SistemaMatriculasApplication.class

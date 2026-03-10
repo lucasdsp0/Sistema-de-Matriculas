@@ -10,7 +10,7 @@
     <div th:fragment="content">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h1 class="gradient-text">Gerenciar Alunos</h1>
-            <a href="#" class="btn btn-success">+ Novo Aluno</a>
+            <a href="/aluno/cadastro" class="btn btn-success">+ Novo Aluno</a>
         </div>
 
         <div th:if="${not #lists.isEmpty(alunos)}" class="table-responsive">
