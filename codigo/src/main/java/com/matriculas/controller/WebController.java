@@ -1,10 +1,13 @@
 package com.matriculas.controller;
 
+import com.matriculas.model.Disciplina;
+import com.matriculas.model.enums.StatusDisciplina;
 import com.matriculas.repository.DisciplinaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class WebController {
@@ -12,39 +15,43 @@ public class WebController {
     @Autowired
     private DisciplinaRepository disciplinaRepository;
 
-    // Rota para a Home (Dashboard)
     @GetMapping("/")
     public String index() {
         return "index";
     }
 
-    // Rota para a tela de Login
     @GetMapping("/login")
     public String login() {
         return "login";
     }
 
-    // Rota para a lista de Disciplinas
     @GetMapping("/disciplinas/lista")
     public String listaDisciplinas(Model model) {
-        // Envia a lista real do banco de dados para a tela
         model.addAttribute("disciplinas", disciplinaRepository.findAll());
         return "disciplinas/lista";
     }
 
-    // Rota para o formulário de Nova Disciplina (Secretaria)
+    // --- AJUSTE: Enviando uma disciplina vazia para o formulário preencher ---
     @GetMapping("/disciplinas/form")
-    public String formDisciplina() {
+    public String formDisciplina(Model model) {
+        model.addAttribute("disciplina", new Disciplina());
         return "disciplinas/form";
     }
 
-    // Rota para o painel de Matrículas do Aluno
+    // --- NOVIDADE: Rota que recebe os dados do formulário e salva no banco! ---
+    @PostMapping("/disciplinas/save")
+    public String salvarDisciplina(Disciplina disciplina) {
+        disciplina.setStatus(StatusDisciplina.ATIVA); // Define como ativa por padrão
+        disciplina.setObrigatorio(true); // Define como obrigatória por padrão
+        disciplinaRepository.save(disciplina);
+        return "redirect:/disciplinas/lista"; // Redireciona de volta para a tabela após salvar
+    }
+
     @GetMapping("/aluno/matriculas")
     public String matriculasAluno() {
         return "aluno/matriculas";
     }
 
-    // Rota para o painel de Alunos do Professor
     @GetMapping("/professor/alunos")
     public String alunosProfessor() {
         return "professor/alunos";
