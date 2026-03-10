@@ -18,8 +18,20 @@
                         <input type="text" class="form-control" id="nome" th:field="*{nome}" required>
                     </div>
                     <div class="mb-3">
-                        <label for="numMaxAlunos" class="form-label">Vagas (Máximo de Alunos)</label>
-                        <input type="number" class="form-control" id="numMaxAlunos" th:field="*{numMaxAlunos}" required>
+                        <label for="codigo" class="form-label">Código</label>
+                        <input type="text" class="form-control" id="codigo" th:field="*{codigo}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="professor" class="form-label">Professor</label>
+                        <select class="form-select" id="professor" th:field="*{professor.id}">
+                            <!-- Exemplo de Option (será populado pelo backend) -->
+                            <option value="1">Dr. Alan Turing</option>
+                            <option value="2">Dra. Ada Lovelace</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="vagas" class="form-label">Vagas</label>
+                        <input type="number" class="form-control" id="vagas" th:field="*{vagas}" required>
                     </div>
                     <button type="submit" class="btn btn-primary">Salvar Disciplina</button>
                 </form>
