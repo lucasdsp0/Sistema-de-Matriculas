@@ -31,7 +31,7 @@ body {
 }
 
 .nav-link {
-    color: var(--text-muted) !important;
+    color: #ffffff !important;
     font-weight: 500;
     transition: 0.3s;
 }
@@ -52,6 +52,14 @@ body {
 .card-title {
     color: var(--text-main);
     font-weight: 700;
+}
+
+.card-body .text-muted {
+    color: #d1d5db !important;
+}
+
+.lead {
+    color: #d1d5db !important;
 }
 
 /* Tabela com Contraste Real */
