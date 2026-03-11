@@ -26,11 +26,13 @@ public class SecurityConfig {
             .authenticationProvider(authenticationProvider())
             .authorizeHttpRequests(authorize -> authorize
                 .requestMatchers("/login", "/css/**", "/js/**", "/images/**").permitAll()
-                .requestMatchers("/secretaria/**", "/disciplinas/**", "/curriculo/**", "/periodo/**", "/aluno/cadastro", "/aluno/lista", "/aluno/matriculas", "/professor/cadastro").hasRole("SECRETARIA")
+                .requestMatchers("/aluno/matriculas").hasAnyRole("ALUNO", "SECRETARIA")
+                .requestMatchers("/aluno/cadastro", "/aluno/lista", "/professor/cadastro", "/secretaria/**", "/disciplinas/**", "/curriculo/**", "/periodo/**").hasRole("SECRETARIA")
                 .requestMatchers("/aluno/**").hasRole("ALUNO")
                 .requestMatchers("/professor/**").hasRole("PROFESSOR")
                 .anyRequest().authenticated()
             )
+            .exceptionHandling(e -> e.accessDeniedPage("/acesso-negado"))
             .formLogin(form -> form
                 .loginPage("/login")
                 .successHandler(customAuthenticationSuccessHandler)

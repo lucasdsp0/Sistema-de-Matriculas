@@ -43,6 +43,11 @@ public class WebController {
     @Autowired
     private MatriculaService matriculaService;
 
+    @GetMapping("/acesso-negado")
+    public String acessoNegado() {
+        return "error/403";
+    }
+
     @GetMapping("/")
     public String index() {
         return "index";
