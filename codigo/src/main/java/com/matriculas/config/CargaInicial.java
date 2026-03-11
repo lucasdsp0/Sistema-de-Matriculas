@@ -6,6 +6,7 @@ import com.matriculas.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 public class CargaInicial implements CommandLineRunner {
@@ -22,14 +23,17 @@ public class CargaInicial implements CommandLineRunner {
     @Autowired
     private SecretariaRepository secretariaRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Override
     public void run(String... args) throws Exception {
         // Popula o banco com dados iniciais
         
         // Criar professores
         if(professorRepository.count() == 0) {
-            Professor prof1 = new Professor("Dr. Alan Turing", "turing", "senha123", 1001L);
-            Professor prof2 = new Professor("Dra. Ada Lovelace", "ada", "senha123", 1002L);
+            Professor prof1 = new Professor("Dr. Alan Turing", "turing", passwordEncoder.encode("senha123"), 1001L);
+            Professor prof2 = new Professor("Dra. Ada Lovelace", "ada", passwordEncoder.encode("senha123"), 1002L);
             professorRepository.save(prof1);
             professorRepository.save(prof2);
             System.out.println("Professores inseridos!");
@@ -58,14 +62,14 @@ public class CargaInicial implements CommandLineRunner {
         
         // Criar aluno de teste
         if(alunoRepository.count() == 0) {
-            Aluno aluno = new Aluno("João Silva", "joao", "senha123", 2023001L);
+            Aluno aluno = new Aluno("João Silva", "joao", passwordEncoder.encode("senha123"), 2023001L);
             alunoRepository.save(aluno);
             System.out.println("Aluno teste inserido!");
         }
         
         // Criar secretária de teste
         if(secretariaRepository.count() == 0) {
-            Secretaria secretaria = new Secretaria("Maria Secretária", "secretaria", "senha123");
+            Secretaria secretaria = new Secretaria("Maria Secretária", "secretaria", passwordEncoder.encode("senha123"));
             secretariaRepository.save(secretaria);
             System.out.println("Secretária teste inserida!");
         }

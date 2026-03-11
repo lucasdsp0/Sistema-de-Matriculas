@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="layout(title, content)">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:fragment="layout(title, content)">
 
 <head th:fragment="head(title)">
     <meta charset="UTF-8">
@@ -25,14 +25,25 @@
                         <a class="nav-link" th:href="@{/}">Home</a>
                     </li>
                     <!-- Links serão adicionados dinamicamente baseados no perfil -->
-                    <li class="nav-item">
+                    <li class="nav-item" sec:authorize="hasRole('SECRETARIA')">
                         <a class="nav-link" th:href="@{/disciplinas/lista}">Disciplinas</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" sec:authorize="hasRole('ALUNO')">
                         <a class="nav-link" th:href="@{/aluno/matriculas}">Minhas Matrículas</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" sec:authorize="hasRole('PROFESSOR')">
+                        <a class="nav-link" th:href="@{/professor/alunos}">Meus Alunos</a>
+                    </li>
+                    <li class="nav-item" sec:authorize="!isAuthenticated()">
                         <a class="nav-link" th:href="@{/login}">Login</a>
+                    </li>
+                    <li class="nav-item" sec:authorize="isAuthenticated()">
+                        <form th:action="@{/logout}" method="post" class="d-inline">
+                            <button type="submit" class="nav-link btn btn-link">Logout</button>
+                        </form>
+                    </li>
+                    <li class="nav-item" sec:authorize="isAuthenticated()">
+                        <span class="nav-link">Olá, <span sec:authentication="name"></span></span>
                     </li>
                 </ul>
             </div>

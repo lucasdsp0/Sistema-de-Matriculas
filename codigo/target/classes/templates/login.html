@@ -13,9 +13,13 @@
                 <div class="card login-card">
                     <div class="card-body">
                         <h3 class="card-title text-center gradient-text mb-4">Login</h3>
-                        <div th:if="${erro}" class="alert alert-danger alert-dismissible fade show">
-                            <span th:text="${erro}"></span>
+                        <div th:if="${param.error}" class="alert alert-danger alert-dismissible fade show">
+                            <span>Credenciais inválidas.</span>
                             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                        <div th:if="${param.logout}" class="alert alert-success alert-dismissible fade show">
+                            <span>Você foi desconectado.</span>
+                            <button type.="button" class="btn-close" data-bs-dismiss="alert"></button>
                         </div>
                         <form th:action="@{/login}" method="post">
                             <div class="mb-3">

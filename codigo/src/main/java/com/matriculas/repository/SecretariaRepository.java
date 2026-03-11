@@ -5,4 +5,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface SecretariaRepository extends JpaRepository<Secretaria, Long> {
+    Secretaria findByLogin(String login);
 }

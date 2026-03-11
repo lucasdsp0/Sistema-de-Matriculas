@@ -7,11 +7,12 @@ import com.matriculas.model.viewmodel.CurriculoViewModel;
 import com.matriculas.repository.*;
 import com.matriculas.service.MatriculaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-import jakarta.servlet.http.HttpSession;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -52,74 +53,22 @@ public class WebController {
         return "login";
     }
 
-    @PostMapping("/login")
-    public String processLogin(@RequestParam String username, @RequestParam String password, 
-                               HttpSession session, Model model) {
-        // Tenta buscar como Aluno
-        Aluno aluno = alunoRepository.findAll().stream()
-            .filter(a -> a.getLogin().equals(username) && a.getSenha().equals(password))
-            .findFirst()
-            .orElse(null);
-
-        if (aluno != null) {
-            session.setAttribute("usuarioLogado", aluno);
-            session.setAttribute("tipoUsuario", "ALUNO");
-            return "redirect:/aluno/matriculas";
-        }
-
-        // Tenta buscar como Professor
-        Professor professor = professorRepository.findAll().stream()
-            .filter(p -> p.getLogin().equals(username) && p.getSenha().equals(password))
-            .findFirst()
-            .orElse(null);
-
-        if (professor != null) {
-            session.setAttribute("usuarioLogado", professor);
-            session.setAttribute("tipoUsuario", "PROFESSOR");
-            return "redirect:/professor/alunos";
-        }
-
-        // Tenta buscar como Secretaria
-        Secretaria secretaria = secretariaRepository.findAll().stream()
-            .filter(s -> s.getLogin().equals(username) && s.getSenha().equals(password))
-            .findFirst()
-            .orElse(null);
-
-        if (secretaria != null) {
-            session.setAttribute("usuarioLogado", secretaria);
-            session.setAttribute("tipoUsuario", "SECRETARIA");
-            return "redirect:/";
-        }
-
-        model.addAttribute("erro", "Credenciais inválidas");
-        return "login";
-    }
-
     @GetMapping("/disciplinas/lista")
-    public String listaDisciplinas(Model model, HttpSession session) {
-        if (!isSecretaria(session)) {
-            return "redirect:/";
-        }
+    public String listaDisciplinas(Model model) {
         model.addAttribute("disciplinas", disciplinaRepository.findAll());
         return "disciplinas/lista";
     }
 
     
     @GetMapping("/disciplinas/form")
-    public String formDisciplina(Model model, HttpSession session) {
-        if (!isSecretaria(session)) {
-            return "redirect:/";
-        }
+    public String formDisciplina(Model model) {
         model.addAttribute("disciplina", new Disciplina());
         return "disciplinas/form";
     }
 
    
     @PostMapping("/disciplinas/save")
-    public String salvarDisciplina(Disciplina disciplina, HttpSession session) {
-        if (!isSecretaria(session)) {
-            return "redirect:/";
-        }
+    public String salvarDisciplina(Disciplina disciplina) {
         disciplina.setStatus(StatusDisciplina.ATIVA); // Define como ativa por padrão
         disciplina.setObrigatorio(true); // Define como obrigatória por padrão
         disciplinaRepository.save(disciplina);
@@ -127,9 +76,9 @@ public class WebController {
     }
 
     @GetMapping("/aluno/matriculas")
-    public String matriculasAluno(HttpSession session, Model model) {
+    public String matriculasAluno(@AuthenticationPrincipal UserDetails userDetails, Model model) {
         // Busca o aluno logado da sessão
-        Aluno alunoLogado = (Aluno) session.getAttribute("usuarioLogado");
+        Aluno alunoLogado = alunoRepository.findByLogin(userDetails.getUsername());
         
         if (alunoLogado != null) {
             // Busca o aluno do banco para evitar LazyInitializationException
@@ -147,19 +96,16 @@ public class WebController {
     }
 
     @GetMapping("/aluno/lista")
-    public String listaAlunos(Model model, HttpSession session) {
-        if (!isSecretaria(session)) {
-            return "redirect:/";
-        }
+    public String listaAlunos(Model model) {
         // Lista todos os alunos cadastrados no sistema
         model.addAttribute("alunos", alunoRepository.findAll());
         return "aluno/lista";
     }
 
     @GetMapping("/professor/alunos")
-    public String alunosProfessor(HttpSession session, Model model) {
+    public String alunosProfessor(@AuthenticationPrincipal UserDetails userDetails, Model model) {
         // Busca o professor logado da sessão
-        Professor professor = (Professor) session.getAttribute("usuarioLogado");
+        Professor professor = professorRepository.findByLogin(userDetails.getUsername());
         
         if (professor != null) {
             // Busca o professor atualizado do banco
@@ -178,19 +124,13 @@ public class WebController {
     // ========== ENDPOINTS DE CADASTRO ==========
 
     @GetMapping("/aluno/cadastro")
-    public String formCadastroAluno(Model model, HttpSession session) {
-        if (!isSecretaria(session)) {
-            return "redirect:/";
-        }
+    public String formCadastroAluno(Model model) {
         model.addAttribute("aluno", new Aluno());
         return "aluno/cadastro";
     }
 
     @PostMapping("/aluno/save")
-    public String salvarAluno(@ModelAttribute Aluno aluno, Model model, HttpSession session) {
-        if (!isSecretaria(session)) {
-            return "redirect:/";
-        }
+    public String salvarAluno(@ModelAttribute Aluno aluno, Model model) {
         try {
             // Valida se login já existe
             boolean loginExiste = alunoRepository.findAll().stream()
@@ -219,19 +159,13 @@ public class WebController {
     }
 
     @GetMapping("/professor/cadastro")
-    public String formCadastroProfessor(Model model, HttpSession session) {
-        if (!isSecretaria(session)) {
-            return "redirect:/";
-        }
+    public String formCadastroProfessor(Model model) {
         model.addAttribute("professor", new Professor());
         return "professor/cadastro";
     }
 
     @PostMapping("/professor/save")
-    public String salvarProfessor(@ModelAttribute Professor professor, Model model, HttpSession session) {
-        if (!isSecretaria(session)) {
-            return "redirect:/";
-        }
+    public String salvarProfessor(@ModelAttribute Professor professor, Model model) {
         try {
             // Valida se login já existe
             boolean loginExiste = professorRepository.findAll().stream()
@@ -262,8 +196,8 @@ public class WebController {
     // ========== ENDPOINTS DE MATRÍCULA ==========
 
     @GetMapping("/matricula/formulario")
-    public String formularioMatricula(HttpSession session, Model model) {
-        Aluno alunoLogado = (Aluno) session.getAttribute("usuarioLogado");
+    public String formularioMatricula(@AuthenticationPrincipal UserDetails userDetails, Model model) {
+        Aluno alunoLogado = alunoRepository.findByLogin(userDetails.getUsername());
         
         if (alunoLogado == null) {
             return "redirect:/login";
@@ -281,9 +215,9 @@ public class WebController {
 
     @PostMapping("/matricula/efetuar")
     public String efetuarMatricula(@RequestParam List<Long> disciplinaIds, 
-                                   HttpSession session, Model model) {
+                                   @AuthenticationPrincipal UserDetails userDetails, Model model) {
         try {
-            Aluno alunoLogado = (Aluno) session.getAttribute("usuarioLogado");
+            Aluno alunoLogado = alunoRepository.findByLogin(userDetails.getUsername());
             if (alunoLogado == null) {
                 return "redirect:/login";
             }
@@ -340,10 +274,7 @@ public class WebController {
     // ========== ENDPOINTS DE CURRÍCULO ==========
 
     @GetMapping("/curriculo/form")
-    public String formCurriculo(Model model, HttpSession session) {
-        if (!isSecretaria(session)) {
-            return "redirect:/";
-        }
+    public String formCurriculo(Model model) {
         model.addAttribute("curriculo", new Curriculo());
         model.addAttribute("disciplinas", disciplinaRepository.findAll());
         return "curriculo/form";
@@ -353,10 +284,7 @@ public class WebController {
     @PostMapping("/curriculo/save")
     public String salvarCurriculo(@ModelAttribute Curriculo curriculo, 
                                   @RequestParam(required = false) List<Long> disciplinaIds,
-                                  Model model, HttpSession session) {
-        if (!isSecretaria(session)) {
-            return "redirect:/";
-        }
+                                  Model model) {
         try {
             if (curriculo.getSemestre() == null || curriculo.getSemestre().isEmpty()) {
                 model.addAttribute("erro", "Semestre é obrigatório!");
@@ -391,10 +319,7 @@ public class WebController {
     }
 
     @GetMapping("/curriculo/lista")
-    public String listaCurriculos(Model model, HttpSession session) {
-        if (!isSecretaria(session)) {
-            return "redirect:/";
-        }
+    public String listaCurriculos(Model model) {
         List<Curriculo> curriculos = curriculoRepository.findAll();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
@@ -414,10 +339,7 @@ public class WebController {
     // ========== ENDPOINTS DE PERÍODO DE MATRÍCULA ==========
 
     @GetMapping("/periodo/encerrar")
-    public String formEncerrarPeriodo(Model model, HttpSession session) {
-        if (!isSecretaria(session)) {
-            return "redirect:/";
-        }
+    public String formEncerrarPeriodo(Model model) {
         model.addAttribute("curriculos", curriculoRepository.findAll());
         return "periodo/encerrar";
     }
@@ -480,10 +402,5 @@ public class WebController {
             model.addAttribute("secretaria", secretaria);
             return "secretaria/cadastro";
         }
-    }
-
-    private boolean isSecretaria(HttpSession session) {
-        String tipoUsuario = (String) session.getAttribute("tipoUsuario");
-        return "SECRETARIA".equals(tipoUsuario);
     }
 }
