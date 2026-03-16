@@ -20,7 +20,6 @@
                         </div>
 
                         <form th:action="@{/curriculo/save}" th:object="${curriculo}" method="post">
-                            <input type="hidden" th:field="*{id}" />
                             <div class="mb-3">
                                 <label for="semestre" class="form-label">Semestre</label>
                                 <input type="text" class="form-control" id="semestre" th:field="*{semestre}" 
@@ -68,7 +67,7 @@
                             </div>
 
                             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                <a th:href="@{/curriculo/lista}" class="btn btn-secondary">Cancelar</a>
+                                <a href="/curriculo/lista" class="btn btn-secondary">Cancelar</a>
                                 <button type="submit" class="btn btn-primary">Salvar Currículo</button>
                             </div>
                         </form>
