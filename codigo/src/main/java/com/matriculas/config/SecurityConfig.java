@@ -27,7 +27,7 @@ public class SecurityConfig {
             .authorizeHttpRequests(authorize -> authorize
                 .requestMatchers("/login", "/css/**", "/js/**", "/images/**").permitAll()
                 .requestMatchers("/aluno/matriculas").hasAnyRole("ALUNO", "SECRETARIA")
-                .requestMatchers("/aluno/cadastro", "/aluno/lista", "/professor/cadastro", "/secretaria/**", "/disciplinas/**", "/curriculo/**", "/periodo/**").hasRole("SECRETARIA")
+                .requestMatchers("/aluno/cadastro", "/aluno/save", "/aluno/lista", "/professor/cadastro", "/professor/save", "/secretaria/**", "/disciplinas/**", "/curriculo/**", "/periodo/**").hasRole("SECRETARIA")
                 .requestMatchers("/aluno/**").hasRole("ALUNO")
                 .requestMatchers("/professor/**").hasRole("PROFESSOR")
                 .anyRequest().authenticated()
