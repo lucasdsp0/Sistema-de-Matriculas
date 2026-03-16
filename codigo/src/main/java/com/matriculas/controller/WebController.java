@@ -285,6 +285,14 @@ public class WebController {
         return "curriculo/form";
     }
 
+    @GetMapping("/curriculo/form/{id}")
+    public String formCurriculo(@PathVariable Long id, Model model) {
+        Curriculo curriculo = curriculoRepository.findById(id).orElse(null);
+        model.addAttribute("curriculo", curriculo);
+        model.addAttribute("disciplinas", disciplinaRepository.findAll());
+        return "curriculo/form";
+    }
+
     @Transactional
     @PostMapping("/curriculo/save")
     public String salvarCurriculo(@ModelAttribute Curriculo curriculo, 
@@ -333,12 +341,18 @@ public class WebController {
                 String dataInicio = c.getDataInicio() != null ? c.getDataInicio().format(formatter) : "-";
                 String dataFim = c.getDataFim() != null ? c.getDataFim().format(formatter) : "-";
                 int disciplinasCount = c.getDisciplinas() != null ? c.getDisciplinas().size() : 0;
-                return new CurriculoViewModel(c.getSemestre(), dataInicio, dataFim, disciplinasCount);
+                return new CurriculoViewModel(c.getId(), c.getSemestre(), dataInicio, dataFim, disciplinasCount);
             })
             .collect(Collectors.toList());
 
         model.addAttribute("curriculos", curriculosViewModel);
         return "curriculo/lista";
+    }
+
+    @GetMapping("/curriculo/deletar/{id}")
+    public String deletarCurriculo(@PathVariable Long id) {
+        curriculoRepository.deleteById(id);
+        return "redirect:/curriculo/lista";
     }
 
     // ========== ENDPOINTS DE PERÍODO DE MATRÍCULA ==========
