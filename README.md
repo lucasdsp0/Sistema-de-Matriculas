@@ -4,7 +4,7 @@ Este repositório contém o desenvolvimento de um sistema para informatização 
 O projeto abrange desde a modelagem de requisitos e arquitetura (UML) até a implementação de um protótipo funcional em Java.
 
 ## Integrantes
-* Arthur Capanema Bretas
+
 * Lucas de Souza Pereira
 * Yan Araújo Resende
 
